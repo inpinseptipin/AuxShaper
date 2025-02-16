@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include <JuceHeader.h>
-#include "AuxParam.h"
+#include <AuxParam.h>
 #include "AuxBezier.h"
 
 //==============================================================================
@@ -20,8 +19,7 @@
 class AuxShaper  : public juce::Component
 {
 public:
-    AuxShaper() = default;
-    AuxShaper(AuxPort::ParameterMap* parameterMap);
+    AuxShaper(AuxPort::Extensions::ParameterMap* parameterMap);
     ~AuxShaper() override;
 
     void paint (juce::Graphics&) override;
@@ -67,7 +65,7 @@ private:
     };
     AuxPoint p1;
     AuxPort::Bezier bezier;
-    AuxPort::ParameterMap* parameterMap;
+    AuxPort::Extensions::ParameterMap* parameterMap;
     juce::Point<float> normalize;
     juce::Point<int> startPoint;
     juce::Point<int> endPoint;

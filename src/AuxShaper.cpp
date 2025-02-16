@@ -180,7 +180,7 @@ void AuxShaper::AuxPoint::limit(juce::Point<int>* point)
 
 
 //==============================================================================
-AuxShaper::AuxShaper(AuxPort::ParameterMap* parameterMap) : p1(parameterMap->getFloatParameter("x1"),parameterMap->getFloatParameter("y1"),parameterMap->getFloatParameter("slope")), bezier(400, AuxPort::Bezier::FourthOrder)
+AuxShaper::AuxShaper(AuxPort::Extensions::ParameterMap* parameterMap) : p1(parameterMap->getFloatParameter("x1"),parameterMap->getFloatParameter("y1"),parameterMap->getFloatParameter("slope")), bezier(400, AuxPort::Bezier::FourthOrder)
 {
     // In your constructor, you should add any child components, and
     // initialise any special settings that your component needs.

@@ -19,16 +19,16 @@ AuxShaperAudioProcessor::AuxShaperAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ),parameterMap(this),bezier(4096,AuxPort::Bezier::FourthOrder)
+                       ),bezier(4096,AuxPort::Bezier::FourthOrder)
 #endif
 {
-    xParam1 = new juce::AudioParameterFloat("x1", "x1", 0, 1, 0.5);
-    yParam1 = new juce::AudioParameterFloat("y1", "y1", 0, 1, 0.5);
-    slopeParam = new juce::AudioParameterFloat("slope", "slope", 0, 1, 0);
-    parameterMap.addParameter(xParam1);
-    parameterMap.addParameter(yParam1);
-    parameterMap.addParameter(slopeParam);
-    parameterMap.save();
+    parameterMap.addAudioProcessor(this);
+    parameterMap.addParameter(new juce::AudioParameterFloat("x1", "x1", 0, 1, 0.5));
+    parameterMap.addParameter(new juce::AudioParameterFloat("y1", "y1", 0, 1, 0.5));
+    parameterMap.addParameter(new juce::AudioParameterFloat("slope", "slope", 0, 1, 0));
+    xParam1 = parameterMap.getFloatParameter("x1");
+    yParam1 = parameterMap.getFloatParameter("y1");
+    slopeParam = parameterMap.getFloatParameter("slope");
 }
 
 AuxShaperAudioProcessor::~AuxShaperAudioProcessor()
@@ -170,6 +170,8 @@ void AuxShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
+
+    
     if ((*xParam1) != midPoint.x)
         midPoint.setX(*xParam1);
     if ((*yParam1) != midPoint.y)
@@ -190,8 +192,6 @@ void AuxShaperAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
     bezier.calcPoints();
     bezier.drawWaveshaper();
 
-
-    //engine.process(buffer);
 
     waveshaper.process(buffer, bezier);
 }

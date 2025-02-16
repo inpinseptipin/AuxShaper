@@ -8,11 +8,11 @@
 
 #pragma once
 
-#include <JuceHeader.h>
-#include "AuxIIR.h"
-#include "AuxParam.h"
+#include <juce_audio_processors/juce_audio_processors.h>
 #include "AuxBezier.h"
 #include "AuxWaveShape.h"
+#include <AuxParam.h>
+#include <AuxPort.h>
 //==============================================================================
 /**
 */
@@ -58,7 +58,7 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    AuxPort::ParameterMap parameterMap;
+    AuxPort::Extensions::ParameterMap parameterMap;
 private:
     //==============================================================================
     juce::AudioParameterFloat* yParam1;
@@ -75,7 +75,7 @@ private:
     juce::Point<float> midPosPoint;
 
 
-    AuxPort::IIR::Engine engine;
+    AuxPort::Audio::IIR::Engine engine;
     AuxPort::Bezier bezier;
     AuxPort::Auxshape waveshaper;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AuxShaperAudioProcessor)
